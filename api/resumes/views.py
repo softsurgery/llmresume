@@ -1,0 +1,1 @@
+from .viewsets.resume_view import *
