@@ -1,5 +1,6 @@
 import uuid
 import os
+import re
 from pathlib import Path
 
 from rest_framework import viewsets, status
@@ -29,7 +30,18 @@ from utils.rendercv.functions import run_rendercv
 )
 class ResumeViewset(DynamicJoinMixin, viewsets.ViewSet):
     ollama = OllamaCore()
-    
+
+    EXT_MAP = {
+        '.pdf': 'pdf',
+        '.html': 'html',
+        '.png': 'png',
+        '.tex': 'tex',
+        '.md': 'md',
+        '.yaml': 'yaml',
+        '.yml': 'yaml',
+        '.typ': 'typ',
+    }
+
     def create(self, request):
         user_input = request.data.get("prompt")
         if not user_input:
@@ -37,12 +49,12 @@ class ResumeViewset(DynamicJoinMixin, viewsets.ViewSet):
 
         try:
             print(f"Enhancing prompt")
-            prompt = self.ollama.generatePrompt(user_input, "rephrase-enhance.md")
+            prompt = self.ollama.generate_prompt(user_input, "rephrase-enhance.md")
             print("Calling Ollama...")
             result = self.ollama.call(prompt)
             print(f"Prompt enhanced: {result}")
             print("Generating prompt...")
-            prompt = self.ollama.generatePrompt(result.get("response", ""), "complete-prompt.md")
+            prompt = self.ollama.generate_prompt(result.get("response", ""), "complete-prompt.md")
             print("Calling Ollama...")
             result = self.ollama.call(prompt)
             
@@ -68,3 +80,27 @@ class ResumeViewset(DynamicJoinMixin, viewsets.ViewSet):
         except Exception as e:
             print(f"Error generating CV: {e}")
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def files(self, request, job_id=None):
+        """Return list of generated files for a job."""
+        if not job_id or not re.match(r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$', job_id):
+            return Response({"error": "Invalid job ID"}, status=status.HTTP_400_BAD_REQUEST)
+
+        job_dir = Path(settings.MEDIA_ROOT) / "jobs" / job_id
+        if not job_dir.exists():
+            return Response({"error": "Job not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        files = []
+        for f in sorted(job_dir.rglob('*')):
+            if f.is_file():
+                ext = f.suffix.lower()
+                ext_key = self.EXT_MAP.get(ext)
+                if ext_key:
+                    files.append({
+                        'name': f.name,
+                        'ext': ext_key,
+                        'ext_upper': ext_key.upper(),
+                        'url': f'/download/{job_id}/{f.name}',
+                    })
+
+        return Response({"files": files, "job_id": job_id})
