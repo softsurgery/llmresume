@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,34 +8,37 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <div class="container">
         <header>
             <h1>AI CV Generator</h1>
-            <p>Powered by Qwen3 & RenderCV</p>
         </header>
-        
+
         <form action="/generate" method="POST" id="cvForm">
-    <section class="card">
-        <h2>Enter Your Career Details</h2>
-        <div class="input-group">
-            <label>Details</label>
-            <textarea name="user_input" rows="12" placeholder="Provide your name, career summary, achievements, education, experience, projects, and any personal info..." required></textarea>
-        </div>
-    </section>
-    <button type="submit" class="btn-primary" id="generateBtn">
-        <span>Generate CV</span>
-        <div class="loader" id="loader"></div>
-    </button>
-</form>
+            <section class="card">
+                <h2>Enter Your Career Details</h2>
+                <div class="input-group">
+                    <label>Details</label>
+                    <textarea name="user_input" rows="12"
+                        placeholder="Provide your name, career summary, achievements, education, experience, projects, and any personal info..."
+                        required></textarea>
+                </div>
+            </section>
+            <button type="submit" class="btn-primary" id="generateBtn">
+                <span>Generate CV</span>
+                <div class="loader" id="loader"></div>
+            </button>
+        </form>
     </div>
 
     <script>
-        document.getElementById('cvForm').addEventListener('submit', function() {
+        document.getElementById('cvForm').addEventListener('submit', function () {
             const btn = document.getElementById('generateBtn');
             btn.classList.add('loading');
             btn.querySelector('span').textContent = 'Generating...';
         });
     </script>
 </body>
+
 </html>

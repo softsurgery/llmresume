@@ -22,10 +22,33 @@ def fix_braces(text: str) -> str:
     fixed = text + ("}" * (open_braces - close_braces)) + ("]" * (open_brackets - close_brackets))
     return fixed
 
+def validate_and_fix_cv(data: dict) -> dict:
+    """Validate and fix CV structure for RenderCV compatibility."""
+    # Ensure cv root key exists
+    if "cv" not in data:
+        if "name" in data or "location" in data:
+            # Wrap top-level keys in cv
+            data = {"cv": data}
+        else:
+            raise ValueError("Invalid CV structure: missing 'cv' key")
+    
+    cv = data.get("cv", {})
+    
+    # Remove design field - RenderCV doesn't support it in the CV structure
+    if "design" in cv:
+        del cv["design"]
+    
+    data["cv"] = cv
+    return data
+
 def json_to_yaml(json_input: str) -> str:
     # Fix braces first
     fixed_json = fix_braces(json_input)
     data = json.loads(fixed_json)
+    
+    # Validate and fix CV structure
+    data = validate_and_fix_cv(data)
+    
     return yaml.safe_dump(
         data,
         sort_keys=False,

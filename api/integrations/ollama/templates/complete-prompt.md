@@ -19,7 +19,7 @@ Your task: generate a CV in JSON format compatible with RenderCV. Follow these r
 "projects": [{"name":"string","date":"YYYY-MM-DD or YYYY-MM or YYYY","highlights":["string"]}]
 }
 },
-"design": {"theme":"string"} # must be top-level
+"design": {"theme":"theme"}
 }
 
 3. Always use **full URLs** starting with http:// or https://
@@ -40,6 +40,6 @@ Your task: generate a CV in JSON format compatible with RenderCV. Follow these r
 11. Do NOT invent invalid usernames. Always respect the required format.
     Do NOT use any other names. If the user mentions other networks, ignore them.
 12. Aim for longer sentences and paragraphs.
-13. theme must be one of: "classic", "ember", "engineeringclassic", "engineeringresumes", "harvard", "ink", "moderncv", "opal", "sb2nov".
+13. theme value in design object must be one of: "classic", "ember", "engineeringclassic", "engineeringresumes", "harvard", "ink", "moderncv", "opal", "sb2nov".
 
 Respond **only with valid JSON** following these rules.
