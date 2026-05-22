@@ -1,9 +1,10 @@
 from .viewsets.resume_view import ResumeViewset
 from django.urls import path
+from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = []
 
-resume = ResumeViewset.as_view({'post': 'create'})
+resume = csrf_exempt(ResumeViewset.as_view({'post': 'create'}))
 
 
 urlpatterns += [

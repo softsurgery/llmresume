@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Your CV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #f0f2f5 0%, #e0e7ff 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --primary-color: #4f46e5;
+            --primary-hover: #4338ca;
+            --text-primary: #111827;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+            --radius: 1rem;
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --success-color: #059669;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 3rem;
+            background: linear-gradient(to right, #111827, #4f46e5);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+        }
+
+        .success-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #ecfdf5;
+            color: var(--success-color);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .success-badge::before {
+            content: "✓";
+            font-weight: 800;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #f3f4f6;
+            padding-bottom: 0.75rem;
+        }
+
+        .download-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .download-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .download-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+            background: #fafafa;
+        }
+
+        .download-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .download-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .icon-pdf {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        .icon-html {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .icon-png {
+            background: #f0fdf4;
+            color: #16a34a;
+        }
+
+        .icon-tex {
+            background: #fefce8;
+            color: #ca8a04;
+        }
+
+        .icon-md {
+            background: #f5f3ff;
+            color: #7c3aed;
+        }
+
+        .icon-yaml {
+            background: #fdf4ff;
+            color: #c026d3;
+        }
+
+        .download-info h3 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .download-info p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.75rem 1.5rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            text-decoration: none;
+            border: 2px solid var(--primary-color);
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-back:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .no-files {
+            color: var(--text-secondary);
+            font-style: italic;
+            padding: 1rem 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Your CV is Ready!</h1>
+            <p>Download your generated CV in your preferred format</p>
+        </header>
+
+        <div style="text-align:center;">
+            <span class="success-badge">CV generated successfully</span>
+        </div>
+
+        <section class="card">
+            <h2>Download Formats</h2>
+            <div class="download-grid">
+                {% for file in files %}
+                <a href="{{ file.url }}" class="download-card" download>
+                    <div class="download-icon icon-{{ file.ext }}">{{ file.ext_upper }}</div>
+                    <div class="download-info">
+                        <h3>{{ file.ext_upper }} Format</h3>
+                        <p>{{ file.name }}</p>
+                    </div>
+                </a>
+                {% empty %}
+                <p class="no-files">No files were generated. Please try again.</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        <div style="text-align:center;">
+            <a href="/" class="btn-back">← Generate Another CV</a>
+        </div>
+    </div>
+</body>
+
+</html>
